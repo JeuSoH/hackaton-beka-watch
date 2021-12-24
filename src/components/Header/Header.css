@@ -108,3 +108,21 @@ header {
     padding-top: 30px;
     color: black;
 }
+.log-in-out {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    border-style: none;
+    margin-top: -10px;
+    margin-left: 20px;
+    padding: 2vh 3vh;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.log-in-out-container {
+    display: flex;
+    align-items: center;
+}

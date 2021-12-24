@@ -4,6 +4,7 @@ import { watchContext } from "../../contexts/WatchContext";
 import "./WatchCard.css";
 import Delete from "../../assets/img/delete.png";
 import Basket from "../../assets/img/basket.png";
+import Favorites from '../../assets/img/bookmark.png';
 
 const WatchCard = ({ item }) => {
     const { deleteWatches, addToCart, checkShoeInCart } =
@@ -40,6 +41,11 @@ const WatchCard = ({ item }) => {
                     onClick={() => deleteWatches(item.id)}
                     className="icon_card"
                     src={Delete}
+                />
+                <img
+                    onClick={() => addToCart(item)}
+                    className="icon_card"
+                    src={Favorites}
                 />
             </div>
         </div>

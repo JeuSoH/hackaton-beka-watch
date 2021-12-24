@@ -9,7 +9,7 @@ import { CircularProgress } from "@material-ui/core";
 const SignIn = () => {
     const { currentUser, loginUser, logoutUser } = useContext(authContext);
     const [pending, setPending] = useState(false);
-    const navigate = useNavigate();
+    const navigate =useNavigate();
 
     let userData = {};
 
@@ -21,7 +21,7 @@ const SignIn = () => {
     }
 
     function handleSubmit(event) {
-        loginUser(event, userData, navigate);
+        loginUser(event, userData);
         setPending(true);
     }
 
@@ -32,7 +32,7 @@ const SignIn = () => {
                     <h2 className="sign-in-btn active"> Sign In </h2>
                     <Link to="/regist">
                         <h2 className="sign-up-btn inactive underlineHover">
-                            Sign Up{" "}
+                            Sign Up
                         </h2>
                     </Link>
 
@@ -57,7 +57,8 @@ const SignIn = () => {
                             name="password"
                             placeholder="password"
                         />
-                        <input
+                        <input 
+                        
                             type="submit"
                             className="fadeIn fourth"
                             value="Log In"

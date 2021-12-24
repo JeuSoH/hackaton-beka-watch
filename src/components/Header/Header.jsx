@@ -8,10 +8,13 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
+import { authContext } from "../../contexts/AuthContext";
 
 const Header = () => {
     const navigate = useNavigate();
     const { search, searchData } = useContext(watchContext);
+    const {currentUser,logoutUser} = useContext(authContext);
+    // const navigate = useNavigate();
     const { searchValue, setSearchValue } = useState("");
     const [show, setShowResult] = useState(false);
 
@@ -106,14 +109,30 @@ const Header = () => {
                                         open={Boolean(anchorEl)}
                                         onClose={handleClose}
                                     >
-                                        <Link to="/login">
-                                            <MenuItem
+                                            {currentUser ? (
+                                                <div className="log-in-out-container">
+                                                <MenuItem
+                                                style={{ color: "black" }}
+                                                onClick={handleClose}
+                                                >
+                                                <p  className="log-in-out" onClick={logoutUser}>Выйти</p>
+                                                
+                                            </MenuItem>
+                                            </div>
+                                            ) : (
+                                                <Link to="/login">
+                                                <div onClick={() => navigate("/login")} className="log-in-out-container">
+                                                <MenuItem
                                                 style={{ color: "black" }}
                                                 onClick={handleClose}
                                             >
-                                                Войти
+                                                <p  className="log-in-out"> Войти</p>
+                                               
                                             </MenuItem>
+                                            </div>
                                         </Link>
+                                            )}
+                                            
                                         <Link to="/cart">
                                             <MenuItem
                                                 style={{ color: "black" }}
@@ -122,11 +141,20 @@ const Header = () => {
                                                 Корзина
                                             </MenuItem>
                                         </Link>
+                                        <Link to="/favorites">
+                                            <MenuItem
+                                                style={{ color: "black" }}
+                                                onClick={handleClose}
+                                            >
+                                                 Избранное
+                                            </MenuItem>
+                                        </Link>
                                         <Link to="/add">
                                             <MenuItem
                                                 style={{ color: "black" }}
                                                 onClick={handleClose}
                                             >
+                                                
                                                 Добавить товар
                                             </MenuItem>
                                         </Link>
