@@ -6,6 +6,7 @@ import { watchContext } from "../../contexts/WatchContext";
 import Delete from "../../assets/img/delete.png";
 import Edit from "../../assets/img/edit.png";
 import { useParams } from "react-router-dom"
+import Comment from "../Comments/Comment";
 
 const Details = () => {
     const { getWatchDetails, watchDetails, saveWatch } =
@@ -131,6 +132,7 @@ const Details = () => {
                     </div>
                 )}
             </div>
+            <Comment/>
         </>
     );
 };

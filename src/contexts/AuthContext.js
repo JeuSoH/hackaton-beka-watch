@@ -1,7 +1,16 @@
 // import axios from "axios";
-import React, { useReducer, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
 // import { AUTH_API, LOGIN_API, REGISTER_API } from "../helpers/Constants";
 import app from "../base.js";
+import { auth } from "../base.js";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  getAuth, 
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
 
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +20,7 @@ export const authContext = React.createContext();
 const INIT_STATE = {
   isAuth: false,
   currentUser: null,
+  user: '',
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -20,12 +30,76 @@ const reducer = (state = INIT_STATE, action) => {
         ...state,
         currentUser: action.payload,
       };
+      case "LOGIN_USER":
+      return { ...state, user: action.payload };
+    case "LOGOUT_USER":
+      return { ...state, user: action.payload };
     default:
       return state;
   }
 };
 
-const AuthContextProvider = ({ children }) => {
+
+
+const AuthContextProvider = ({ children, props }) => {
+
+  console.log(props);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch({
+          type: "LOGIN_USER",
+          payload: user,
+        });
+      } else {
+        dispatch({
+          type: "LOGOUT_USER",
+          payload: '',
+        });
+      }
+    });
+  }, []);
+
+  const createUserWithEmailAndPasswordHandler = async (email, password) => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const logOut = async () => {
+    signOut(auth)
+      .then(() => {
+        dispatch({
+          type: "LOGOUT_USER",
+          payload: '',
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  let adminEmail = 'kubaismailov02@gmail.com';
+
+  const loginUserWithEmail = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  function forgotPassword(email) {
+    return sendPasswordResetEmail(auth, email, {
+      url: 'http://localhost:3000/login'
+    })
+  }
+
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const [currentUser, setCurrentUser] = useState(null);
   const cookies = new Cookies();
@@ -93,6 +167,12 @@ const AuthContextProvider = ({ children }) => {
         registerUser,
         loginUser,
         logoutUser,
+        createUserWithEmailAndPasswordHandler,
+        loginUserWithEmail,
+        logOut,
+        forgotPassword,
+        user: state.user,
+        adminEmail
       }}
     >
       {children}

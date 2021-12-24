@@ -120,5 +120,15 @@
       "SixtyImg": "",
       "id": 10
     }
+  ],
+  "comments": [
+    {
+      "text": "weeeeeeeeeeeeeeeeeeee",
+      "owner": "test@mail.com",
+      "productId": "1",
+      "createdAt": "2021-12-24T11:35:15.884Z",
+      "createdAtMs": 1640345715884,
+      "id": 1
+    }
   ]
 }

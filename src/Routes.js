@@ -15,12 +15,14 @@ import SignUp from "./components/SignUp/SignUp";
 import AuthContextProvider from "./contexts/AuthContext";
 import Footer from "./components/Footer/Footer";
 import Favorites from "./components/Favorites/Favorites";
+import CommentContextProvider from "./contexts/CommentContext";
 
 const App = () => {
   return (
     <BrowserRouter>
       <WatchContextProvider>
         <AuthContextProvider>
+          <CommentContextProvider>
           <Header />
           <Routes>
             <Route path="/login" element={<SignIn />} />
@@ -36,6 +38,7 @@ const App = () => {
             {/* <Redirect to="/" /> */}
           </Routes>
           <Footer />
+          </CommentContextProvider>
         </AuthContextProvider>
       </WatchContextProvider>
     </BrowserRouter>
